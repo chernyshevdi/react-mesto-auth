@@ -1,0 +1,7 @@
+.profile__overlay {
+  min-width: 120px;
+  min-height: 120px;
+  background-image: url('../../../images/avatar-pencil.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+}
