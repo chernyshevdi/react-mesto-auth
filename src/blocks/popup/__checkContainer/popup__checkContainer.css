@@ -1,0 +1,19 @@
+.popup__checkContainer {
+  width: 430px;
+  background-color: #ffffff;
+  overflow: visible;
+  position: relative;
+  border-radius: 10px;
+  margin: 0 auto 0;
+  display: flex;
+  flex-direction: column;
+  height: 330px;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .popup__checkContainer {
+    max-width: 282px;
+    min-height: 230px;
+  }
+}

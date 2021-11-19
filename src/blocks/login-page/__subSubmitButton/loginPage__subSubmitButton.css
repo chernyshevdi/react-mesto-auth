@@ -1,0 +1,16 @@
+.loginPage__subSubmitButton {
+  text-decoration: none;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+  margin-top: 15px;
+}
+
+.loginPage__subSubmitButton:hover {
+  opacity: .8;
+  transition: 0.5s linear;
+  cursor: pointer;
+}

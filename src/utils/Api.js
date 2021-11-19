@@ -44,6 +44,10 @@ class Api {
     });
   }
 
+
+
+
+
   patchCard(nameCard, linkCard) {
     //передаем данные карточки созданные пользователем
     return fetch(this.baseUrl + "/cards", {
@@ -106,7 +110,7 @@ const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/cohort-28",
   headers: {
     authorization: "37a57185-a3c1-401e-aba8-ce2242497099",
-    "Content-Type": "application/json",
+    "Content-Type": "application/json"
   },
 });
 

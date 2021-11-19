@@ -10,5 +10,5 @@ const avatarForm = document.forms.profileAvatar;
 
 export {
   page, editButton, addButton, nameInput, jobInput,
-  editProfileForm, addCardForm, avatar, avatarForm
+  editProfileForm, addCardForm, avatar, avatarForm,
 }

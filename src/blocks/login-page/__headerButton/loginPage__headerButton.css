@@ -1,0 +1,20 @@
+.loginPage__headerButton {
+  position: absolute;
+  top: 50px;
+  background: #000000;
+  border: none;
+  color: #ffffff;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  right: 274px;
+  text-decoration: none;
+}
+
+.loginPage__headerButton:hover {
+  opacity: .6;
+  transition: 0.5s linear;
+  cursor: pointer;
+}
