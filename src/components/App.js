@@ -1,7 +1,6 @@
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
-import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import React, { useState, useEffect } from "react";
 import { api } from "../utils/Api.js";
@@ -15,7 +14,7 @@ import Login from "./Login";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
-import * as auth from "./AuthApi";
+import * as auth from "../utils/AuthApi";
 import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -26,12 +25,13 @@ function App() {
   const [headerEmail, setHeaderEmail] = useState(""); //блок кнопки и емейла в хедере
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = React.useState(false);
-
-  const token = localStorage.getItem("token");
+  const [popup, setPopup] = React.useState(null);
+  const [popupOpen, setPopupOpen] = React.useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     if (token) {
       auth
         .tokenCheck(token)
@@ -46,7 +46,7 @@ function App() {
     } else {
       setLoggedIn(false);
     }
-  }, [token]);
+  },[localStorage.getItem('token'), navigate]);
 
   function signOut() {
     localStorage.removeItem("token");
@@ -111,6 +111,19 @@ function App() {
       });
   }
 
+  useEffect(() => {
+    const closeByEscape = (e) => {
+      if (e.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+
+    document.addEventListener('keydown', closeByEscape)
+
+    return () => document.removeEventListener('keydown', closeByEscape)
+}, [])
+
+
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
@@ -131,7 +144,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setSelectedCard();
+    setSelectedCard({ name: "", link: "" });
   }
 
   function handleUpdateUser(data) {
@@ -172,6 +185,38 @@ function App() {
 
   function handleUpdateLogin() {
     setLoggedIn(true);
+  }
+
+  function closePopup() {
+    setPopupOpen(false);
+  }
+
+  function handlePopup() {
+    setPopup(true);
+  }
+
+  function handleRegister(data) {
+    auth
+    .register(data.password, data.email)
+    .then(() => {
+      handlePopup();
+      setPopupOpen(true);
+    })
+    .catch(() => {
+      setPopup(false);
+      setPopupOpen(true);
+    });
+  }
+
+  function handleLogin(data) {
+    auth
+      .login(data.password, data.email)
+      .then(() => {
+          navigate("/page");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -222,7 +267,6 @@ function App() {
 
                   <Footer />
 
-                  <InfoTooltip />
                 </>
               }
             />
@@ -230,9 +274,21 @@ function App() {
             <Route
               exact
               path="/sign-in"
-              element={<Login handleUpdateLogin={handleUpdateLogin} />}
+              element={<Login
+                handleUpdateLogin={handleUpdateLogin}
+                onUpdate={handleLogin}
+              />}
             />
-            <Route exact path="/sign-up" element={<Register />} />
+            <Route exact path="/sign-up" element={
+              <>
+              <Register onUpdate={handleRegister}/>
+              <InfoTooltip
+                isOpen={popupOpen}
+                onSubmit={popup}
+                onClose={closePopup}
+              />
+              </>
+            } />
             <Route
               exact
               path="/"

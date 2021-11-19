@@ -9,7 +9,6 @@ function Header(props) {
         <p className="header__email">{props.email}</p>
         <Link to="/sign-in" className="header__button" onClick={props.onClose}>Выйти</Link>
       </div>
-
     </header>
   );
 }

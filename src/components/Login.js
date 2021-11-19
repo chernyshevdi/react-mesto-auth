@@ -1,12 +1,9 @@
 import React from "react";
-import Module from "./Module";
-import * as auth from "./AuthApi";
-import { useNavigate } from "react-router-dom";
+import AuthPage from "./AuthPage";
 
-function Login() {
+function Login(props) {
   const [pass, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
-  let navigate = useNavigate();
 
   function handleChangePassword(e) {
     setPassword(e.target.value);
@@ -18,18 +15,14 @@ function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    auth
-      .login(pass, email)
-      .then(() => {
-        navigate("/page");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    props.onUpdate({
+      password: pass,
+      email: email
+    })
   }
 
   return (
-    <Module
+    <AuthPage
       headerButton="Регистрация"
       name="Вход"
       submitButton="Войти"
@@ -39,7 +32,7 @@ function Login() {
       valuePass={pass}
       valueEmail={email}
       onSubmit={handleSubmit}
-    ></Module>
+    ></AuthPage>
   );
 }
 

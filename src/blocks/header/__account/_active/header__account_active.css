@@ -1,6 +1,6 @@
 .header__account_active {
   opacity: 1;
-  width: 220px;
+  min-width: 220px;
   display: flex;
   justify-content: space-between;
   align-items: center;

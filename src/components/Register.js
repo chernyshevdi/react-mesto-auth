@@ -1,15 +1,10 @@
 import React from "react";
-import Module from "./Module";
+import AuthPage from "./AuthPage";
 import { Link } from "react-router-dom";
-import * as auth from "./AuthApi";
-import { useNavigate } from "react-router-dom";
-import InfoTooltip from "./InfoTooltip";
 
-function Register() {
+function Register(props) {
   const [pass, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [popup, setPopup] = React.useState(null);
-  const [popupOpen, setPopupOpen] = React.useState(false);
 
   function handleChangePassword(e) {
     setPassword(e.target.value);
@@ -19,30 +14,16 @@ function Register() {
     setEmail(e.target.value);
   }
 
-  function closePopup() {
-    setPopupOpen(false);
-  }
-
-  function handlePopup() {
-    setPopup(true);
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
-    auth
-      .register(pass, email)
-      .then(() => {
-        handlePopup();
-        setPopupOpen(true);
-      })
-      .catch(() => {
-        setPopup(false);
-        setPopupOpen(true);
-      });
+    props.onUpdate({
+      password: pass,
+      email: email
+    })
   }
 
   return (
-    <Module
+    <AuthPage
       headerButton="Войти"
       name="Регистрация"
       submitButton="Зарегистрироваться"
@@ -53,16 +34,10 @@ function Register() {
       valueEmail={email}
       onSubmit={handleSubmit}
     >
-      <InfoTooltip
-        isOpen={popupOpen ? "popup_opened" : "popup"}
-        onSubmit={popup}
-        onPopup={popup}
-        onClose={closePopup}
-      />
       <Link to="/sign-in" className="loginPage__subSubmitButton">
         Уже зарегистрированы? Войти
       </Link>
-    </Module>
+    </AuthPage>
   );
 }
 

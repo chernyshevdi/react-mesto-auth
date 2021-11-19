@@ -1,11 +1,10 @@
 import React from "react";
-import PopupWithForm from "./PopupWithForm";
 import union from "../images/Union.png";
 import unionError from "../images/UnionError.png";
 
 function InfoTooltip(props) {
   return (
-    <div className={`popup ${props.isOpen}`}>
+    <div className={`popup ${props.isOpen ? "popup_opened" : "popup"}`}>
       <div className="popup__checkContainer">
         <button
           className="popup__close"
@@ -16,6 +15,7 @@ function InfoTooltip(props) {
         <img
           className="popup__checkImage"
           src={props.onSubmit ? union : unionError}
+          alt={props.onSubmit ? "Успешная регистрация" : "Неуспешная регистрация"}
         ></img>
         <h3 className="popup__status">
           {props.onSubmit

@@ -1,5 +1,13 @@
 export const BASE_URL = "https://auth.nomoreparties.co";
 
+const checkFetch = (res) => {
+  if (res.ok) {
+    return res.json();
+  } else {
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+}
+
 export const register = (password, email) => {
   return fetch(BASE_URL + "/signup", {
     method: "POST",
@@ -10,13 +18,7 @@ export const register = (password, email) => {
       password: password,
       email: email,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
-  });
+  }).then(checkFetch);
 };
 
 export const login = (password, email) => {
@@ -30,13 +32,7 @@ export const login = (password, email) => {
       email: email,
     }),
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+    .then(checkFetch)
     .then((data) => {
       if (data.token) {
         localStorage.setItem("token", data.token);
@@ -44,9 +40,6 @@ export const login = (password, email) => {
         return;
       }
     })
-    .catch((err) => {
-      console.log(err);
-    });
 };
 
 export const tokenCheck = (token) => {
@@ -57,17 +50,8 @@ export const tokenCheck = (token) => {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    })
+    .then(checkFetch)
     .then((res) => {
       return res;
     })
-    .catch((err) => {
-      console.log(err);
-    });
 };

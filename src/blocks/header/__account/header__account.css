@@ -1,7 +1,4 @@
 .header__account {
-  min-width: 220px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: none;
   opacity: 0;
 }

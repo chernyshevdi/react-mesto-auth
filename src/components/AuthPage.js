@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Module(props) {
+function AuthPage(props) {
   return (
     <div className="loginPage">
       <Link to={props.link} className="loginPage__headerButton">
@@ -30,4 +30,4 @@ function Module(props) {
   );
 }
 
-export default Module;
+export default AuthPage;

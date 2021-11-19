@@ -9,6 +9,11 @@ function AddPlacePopup(props) {
     setName(e.target.value);
   }
 
+  useEffect(() => {
+    setName('');
+    setLink('');
+},[props.isOpen]);
+
   function handleChangeLink(e) {
     setLink(e.target.value);
   }
