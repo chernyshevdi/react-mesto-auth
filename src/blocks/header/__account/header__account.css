@@ -1,9 +1,7 @@
 .header__account {
-  width: 220px;
+  min-width: 220px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   opacity: 0;
-  overflow: hidden;
-  border: 1px solid red;
 }
